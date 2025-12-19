@@ -1,0 +1,7 @@
+{
+  "name": "mfe",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/mfe/src",
+  "projectType": "application",
+  "tags": []
+}

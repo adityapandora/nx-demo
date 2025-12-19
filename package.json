@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "concurrently \"npm run bff:serve\" \"npm run mfe:serve\" --names \"BFF,REMOTE\" --prefix-colors \"blue,green\" --kill-others",
-    "bff:serve": "nx serve bff",
-    "mfe:serve": "nx serve mfe"
+    "dev": "lsof -ti:5173 | xargs kill -9 2>/dev/null; NODE_ENV=development NX_TUI=false nx serve bff",
+    "build": "NODE_ENV=production npx rspack build -c apps/mfe/rspack.config.js && NODE_ENV=production nx build bff",
+    "start": "NODE_ENV=production node dist/bff/main.js",
+    "preview": "pnpm run build && pnpm run start"
   },
   "private": true,
   "devDependencies": {
@@ -26,7 +27,6 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@rspack/cli": "^1.5.0",
     "@rspack/core": "^1.6.7",
-    "@rspack/dev-server": "^1.1.4",
     "@rspack/plugin-react-refresh": "^1.0.0",
     "@svgr/webpack": "^8.0.1",
     "@swc-node/register": "~1.9.1",
@@ -41,10 +41,8 @@
     "@types/node": "^25.0.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "@types/react-router-dom": "^5.3.3",
     "autoprefixer": "10.4.13",
     "babel-jest": "^30.0.2",
-    "concurrently": "^9.2.1",
     "esbuild": "^0.19.2",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
@@ -65,7 +63,8 @@
     "tslib": "^2.3.0",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.40.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-middleware": "^7.4.5"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -73,6 +72,6 @@
     "express": "^4.21.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.30.2"
+    "webpack-dev-middleware": "^7.4.5"
   }
 }

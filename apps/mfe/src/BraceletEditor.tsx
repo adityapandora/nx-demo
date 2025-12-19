@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import './styles.css';
+
+const MFE_API_BASE = 'http://localhost:5173';
 
 const BraceletEditor = () => {
   const [dataFromBff, setDataFromBff] = useState({
@@ -9,14 +10,12 @@ const BraceletEditor = () => {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch('http://localhost:5173/api');
+      const res = await fetch(`${MFE_API_BASE}/api`);
       const data = await res.json();
-      console.log('api response', data);
       setDataFromBff(data);
     })();
   }, []);
-
-  const { siteId } = useParams();
+  const siteId = window.location.pathname.split('/')[1];
   console.log('site id', siteId);
   return (
     <>
